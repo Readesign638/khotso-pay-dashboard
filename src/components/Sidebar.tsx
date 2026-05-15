@@ -4,24 +4,38 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ onNavigate, activeView }: SidebarProps) {
-  // Use these classes to show which tab is "Active"
   const getLinkClass = (view: string) => 
-    `flex items-center gap-3 p-4 rounded-2xl font-bold transition-all ${
+    `flex items-center justify-center md:justify-start gap-3 p-3 md:p-4 rounded-2xl font-bold transition-all ${
       activeView === view 
         ? 'bg-blue-600 text-white shadow-lg' 
         : 'text-slate-400 hover:bg-slate-50'
     }`;
 
   return (
-    <aside className="w-64 bg-white border-r border-slate-100 p-6 flex flex-col h-screen">
-      <nav className="space-y-4">
+    /* MOBILE: fixed at bottom, full width, horizontal row
+      DESKTOP (md:): fixed at left, 64px width, vertical column 
+    */
+    <aside className="fixed bottom-0 left-0 w-full bg-white border-t border-slate-100 p-2 z-50 
+                      md:relative md:w-64 md:h-screen md:border-r md:border-t-0 md:p-6 flex md:flex-col">
+      
+      <nav className="flex flex-row justify-around w-full md:flex-col md:space-y-4">
+        
         <button onClick={() => onNavigate('dashboard')} className={getLinkClass('dashboard')}>
-          Dashboard
+          <span className="text-xs md:text-base">Dashboard</span>
         </button>
+
         <button onClick={() => onNavigate('transactions')} className={getLinkClass('transactions')}>
-          Transactions
+          <span className="text-xs md:text-base">Transactions</span>
         </button>
-        {/* Add more buttons here... */}
+
+        <button onClick={() => onNavigate('analytics')} className={getLinkClass('analytics')}>
+          <span className="text-xs md:text-base">Analytics</span>
+        </button>
+
+        <button onClick={() => onNavigate('wallet')} className={getLinkClass('wallet')}>
+          <span className="text-xs md:text-base">Wallet</span>
+        </button>
+
       </nav>
     </aside>
   );
